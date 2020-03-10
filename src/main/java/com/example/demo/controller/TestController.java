@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class TestController {
     @RequestMapping("/test")
     public String test(){
+        int i=10/0;
         return "test";
     }
 }
