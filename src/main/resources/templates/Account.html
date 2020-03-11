@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>账户页面</title>
+</head>
+<body>
+    <table border="1">
+        <tr th:each="account: ${accounts}">
+            <td th:text="${account.id}"/>
+            <td th:text="${account.name}"/>
+            <td th:text="${account.money}"/>
+        </tr>
+</table>
+</body>
+</html>
