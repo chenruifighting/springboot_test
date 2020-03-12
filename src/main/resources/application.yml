@@ -6,16 +6,21 @@ spring:
     url: jdbc:mysql:///ssm?useUnicode=true&serverTimezone=UTC&characterEncoding=UTF-8
     username: root
     password: root
+  #redisç¼“å­˜
+  redis:
+    host: localhost
+    port: 6379
+  #ç‰ˆæœ¬é…ç½®
   profiles:
-    active: pro
+    active:
 ---
-#¿ª·¢°æ±¾
+#å¼€å‘ç‰ˆæœ¬
 server:
   port: 81
 spring:
   profiles: dev
 ---
-#Éú²ú°æ±¾
+#ç”Ÿäº§ç‰ˆæœ¬
 server:
   port: 82
 spring:
