@@ -6,3 +6,17 @@ spring:
     url: jdbc:mysql:///ssm?useUnicode=true&serverTimezone=UTC&characterEncoding=UTF-8
     username: root
     password: root
+  profiles:
+    active: pro
+---
+#开发版本
+server:
+  port: 81
+spring:
+  profiles: dev
+---
+#生产版本
+server:
+  port: 82
+spring:
+  profiles: pro
