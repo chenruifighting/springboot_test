@@ -25,8 +25,30 @@ public class AccountController {
         List<Account> accounts=redisTemplate.opsForList().range("findAll",0,-1);
         if(accounts.isEmpty()){
             accounts=accountService.findAll();
-            redisTemplate.opsForList().leftPushAll("findAll",accounts);
+            redisTemplate.opsForList().rightPushAll("findAll",accounts);
             System.out.println("从数据库中获取");
+        }else {
+            System.out.println("从缓存中获取");
+        }
+        model.addAttribute("accounts",accounts);
+        return "Account";
+    }
+
+    //双检查锁DCL,高并发下防止缓存穿透
+    @GetMapping("safeFindAll")
+    public String safeFindAll(Model model) {
+        List<Account> accounts=redisTemplate.opsForList().range("safeFindAll",0,-1);
+        if(accounts.isEmpty()){
+            synchronized (this){
+                accounts=redisTemplate.opsForList().range("safeFindAll",0,-1);
+                if(accounts.isEmpty()){
+                    accounts=accountService.findAll();
+                    redisTemplate.opsForList().rightPushAll("safeFindAll",accounts);
+                    System.out.println("从数据库中获取");
+                }else {
+                    System.out.println("从缓存中获取");
+                }
+            }
         }else {
             System.out.println("从缓存中获取");
         }
