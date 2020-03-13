@@ -35,9 +35,10 @@ public class AccountController {
     }
 
     //双检查锁DCL,高并发下防止缓存穿透
+    private static volatile List<Account> accounts=null;
     @GetMapping("safeFindAll")
     public String safeFindAll(Model model) {
-        List<Account> accounts=redisTemplate.opsForList().range("safeFindAll",0,-1);
+        accounts=redisTemplate.opsForList().range("safeFindAll",0,-1);
         if(accounts.isEmpty()){
             synchronized (this){
                 accounts=redisTemplate.opsForList().range("safeFindAll",0,-1);
